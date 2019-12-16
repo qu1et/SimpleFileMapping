@@ -1,0 +1,6 @@
+﻿  Source.cpp
+C:\Users\gasan\source\repos\cousreClient\cousreClient\Source.cpp(35,9): warning C4477: "printf": в строке форматирования "%s" требуется аргумент типа "char *", но вариативный аргумент "1" имеет тип "DWORD"
+C:\Users\gasan\source\repos\cousreClient\cousreClient\Source.cpp(35,9): warning C4477: "printf": в строке форматирования "%s" требуется аргумент типа "char *", но вариативный аргумент "2" имеет тип "DWORD"
+C:\Users\gasan\source\repos\cousreClient\cousreClient\Source.cpp(35,9): warning C4477: "printf": в строке форматирования "%s" требуется аргумент типа "char *", но вариативный аргумент "3" имеет тип "DWORD"
+C:\Users\gasan\source\repos\cousreClient\cousreClient\Source.cpp(33,1): error C4996: 'GetVersionExA': объявлен deprecate
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\um\sysinfoapi.h(387): message : см. объявление "GetVersionExA"
