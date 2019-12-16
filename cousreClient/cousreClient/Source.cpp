@@ -1,6 +1,8 @@
 #include <Windows.h>
 #include <stdio.h>
 
+#pragma warning(disable : 4996)
+
 #define BUFFER_LEN 1024
 
 TCHAR szName[] = TEXT("Global\\AboutSystem");
@@ -23,15 +25,16 @@ int main() {
 	bufCharCount = BUFFER_LEN;
 	GetUserName(userName, &bufCharCount);
 
-	//Заносим имя компьютера и имя пользователя в буфер
-	snprintf(buffer, sizeof buffer, "Computer Name: %s\nUser Name: %s", computerName, userName);
-
-	/*Получение версии ОС (Закрыто на ремонт)
+	//Получение версии ОС
 	OSVERSIONINFO osvi;
 	ZeroMemory(&osvi, sizeof(OSVERSIONINFO));
 	osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-	GetVersionExA(&osvi);
-	*/
+	GetVersionEx(&osvi);
+
+	printf("%d.%d.%d\n", osvi.dwMajorVersion, osvi.dwMinorVersion, osvi.dwBuildNumber);
+
+	//Заносим имя компьютера, имя пользователя и версию ОС в буфер
+	snprintf(buffer, sizeof buffer, "Computer Name: %s\nUser Name: %s\nOS Version: %d.%d.%d", computerName, userName, osvi.dwMajorVersion, osvi.dwMinorVersion, osvi.dwBuildNumber);
 
 	//Создаем объект отображенного файла
 	hMapFile = CreateFileMapping(

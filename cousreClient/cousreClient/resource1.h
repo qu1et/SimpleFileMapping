@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Включаемый файл, созданный в Microsoft Visual C++.
-// Используется cousreClient1.rc
+// Используется courseFirstServer.rc
 //
 #define IDR_RT_MANIFEST1                1
 

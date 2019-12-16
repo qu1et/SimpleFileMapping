@@ -25,11 +25,11 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="cousreClient1.rc">
+    <ResourceCompile Include="courseFirstServer.rc">
       <Filter>Файлы ресурсов</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Manifest Include="E:\appname. exe.manifest" />
+    <Manifest Include="..\appname.exe.manifest" />
   </ItemGroup>
 </Project>
