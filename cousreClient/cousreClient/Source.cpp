@@ -31,10 +31,8 @@ int main() {
 	osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
 	GetVersionEx(&osvi);
 
-	printf("%d.%d.%d\n", osvi.dwMajorVersion, osvi.dwMinorVersion, osvi.dwBuildNumber);
-
 	//Заносим имя компьютера, имя пользователя и версию ОС в буфер
-	snprintf(buffer, sizeof buffer, "Computer Name: %s\nUser Name: %s\nOS Version: %d.%d.%d", computerName, userName, osvi.dwMajorVersion, osvi.dwMinorVersion, osvi.dwBuildNumber);
+	snprintf(buffer, sizeof buffer, "Computer Name: %s\nUser Name: %s\nOS Version: %d.%d.%d\n", computerName, userName, osvi.dwMajorVersion, osvi.dwMinorVersion, osvi.dwBuildNumber);
 
 	//Создаем объект отображенного файла
 	hMapFile = CreateFileMapping(
@@ -48,8 +46,10 @@ int main() {
 	if (hMapFile == FALSE) {
 		printf("CreateFileMapping Failed with error %d\n", GetLastError());
 	}
+	else {
+		printf("CreateFileMapping: Success.\n");
+	}
 
-	printf("CreateFileMapping: Success.\n");
 
 	//Получаем указатель на участок файла с отображением
 	lpBuffer = (PCHAR)MapViewOfFile(
@@ -62,8 +62,9 @@ int main() {
 	if (lpBuffer == NULL) {
 		printf("MapViewOfFile failed with error %d\n", GetLastError());
 	}
-
-	printf("MapViewOfFile: Success.\n");
+	else {
+		printf("MapViewOfFile: Success.\n");
+	}
 
 	//Копируем наш буфер
 	CopyMemory(lpBuffer, buffer, szBuffer);
@@ -74,8 +75,9 @@ int main() {
 	if (bResult == FALSE) {
 		printf("UnmapViewOfFile failed with error %d.\n", GetLastError());
 	}
-
-	printf("UnmapViewOfFile: Success.\n");
+	else {
+		printf("UnmapViewOfFile: Success.\n\n");
+	}
 
 	system("PAUSE");
 	return 0;

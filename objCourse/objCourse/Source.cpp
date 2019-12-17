@@ -3,11 +3,11 @@
 
 #define BUFFER_LEN 1024
 
-TCHAR szFirstServerName[] = TEXT("Global\\AboutSystem");
-TCHAR szSecondServerName[] = TEXT("Global\\AboutMemory");
+TCHAR szFirstProcessName[] = TEXT("Global\\AboutSystem");
+TCHAR szSecondProcessName[] = TEXT("Global\\AboutMemory");
 
-void getInfoFromFirstServer();
-void getInfoFromSecondServer();
+void getInfoFromFirstProcess();
+void getInfoFromSecondProcess();
 
 int main() {
 	int n = -1;
@@ -18,17 +18,17 @@ int main() {
 		printf("Percentage of physical memory used, percentage of virtual memory used\n");
 		printf("Exit (the best choice)\n");
 		printf("Input: ");
-		scanf_s("%d", &n);
+		scanf_s("\n%d", &n);
 
 		switch (n) {
 			case 1:
 			{
-				getInfoFromFirstServer();
+				getInfoFromFirstProcess();
 				break;
 			}
 			case 2:
 			{
-				getInfoFromSecondServer();
+				getInfoFromSecondProcess();
 				break;
 			}
 		}
@@ -37,7 +37,7 @@ int main() {
 	return 0;
 }
 
-void getInfoFromFirstServer() {
+void getInfoFromFirstProcess() {
 	HANDLE hFileMap;
 	BOOL bResult;
 	PCHAR lpBuffer = NULL;
@@ -46,14 +46,15 @@ void getInfoFromFirstServer() {
 	hFileMap = OpenFileMapping(
 		FILE_MAP_ALL_ACCESS,
 		FALSE,
-		szFirstServerName
+		szFirstProcessName
 	);
 
 	if (hFileMap == NULL) {
-		printf("OpenFileMapping failed with error %d.\n");
+		printf("OpenFileMapping failed with error %d.\n", GetLastError());
 	}
-
-	printf("OpenFileMapping: Success.\n");
+	else {
+		printf("OpenFileMapping: Success.\n");
+	}
 
 	//Step 2 Получаем данные
 	lpBuffer = (PCHAR)MapViewOfFile(
@@ -66,8 +67,9 @@ void getInfoFromFirstServer() {
 	if (lpBuffer == NULL) {
 		printf("MapViewOfFile failed with error %d\n", GetLastError());
 	}
-
-	printf("MapViewOfFile: Success.\n");
+	else {
+		printf("MapViewOfFile: Success.\n\n");
+	}
 
 	// Step 3 Выводим полученные данные 
 	printf("%s\n", lpBuffer);
@@ -78,15 +80,15 @@ void getInfoFromFirstServer() {
 	if (bResult == NULL) {
 		printf("UnmapViewOfFile failed with error %d\n", GetLastError());
 	}
-
-	printf("UnmapViewOfFile: Success.\n");
+	else {
+		printf("UnmapViewOfFile: Success.\n");
+	}
 
 	// Step 5 Close Handle
-
 	CloseHandle(hFileMap);
 }
 
-void getInfoFromSecondServer() {
+void getInfoFromSecondProcess() {
 	HANDLE hFileMap;
 	BOOL bResult;
 	PCHAR lpBuffer = NULL;
@@ -95,17 +97,17 @@ void getInfoFromSecondServer() {
 	hFileMap = OpenFileMapping(
 		FILE_MAP_ALL_ACCESS,
 		FALSE,
-		szSecondServerName
+		szSecondProcessName
 	);
 
 	if (hFileMap == NULL) {
-		printf("OpenFileMapping failed with error %d.\n");
+		printf("OpenFileMapping failed with error %d.\n", GetLastError());
+	}
+	else {
+		printf("OpenFileMapping: Success.\n");
 	}
 
-	printf("OpenFileMapping: Success.\n");
-
 	//Step 2 MapViewOfFile
-
 	lpBuffer = (PCHAR)MapViewOfFile(
 		hFileMap,
 		FILE_MAP_ALL_ACCESS,
@@ -116,24 +118,23 @@ void getInfoFromSecondServer() {
 	if (lpBuffer == NULL) {
 		printf("MapViewOfFile failed with error %d\n", GetLastError());
 	}
-
-	printf("MapViewOfFile: Success.\n");
+	else {
+		printf("MapViewOfFile: Success.\n\n");
+	}
 
 	// Step 3 Reading Data from File Map Object
-
 	printf("%s\n", lpBuffer);
 
 	// Step 4 UnmapViewOfFile
-
 	bResult = UnmapViewOfFile(lpBuffer);
 
 	if (bResult == NULL) {
 		printf("UnmapViewOfFile failed with error %d\n", GetLastError());
 	}
-
-	printf("UnmapViewOfFile: Success.\n");
+	else {
+		printf("UnmapViewOfFile: Success.\n");
+	}
 
 	// Step 5 Close Handle
-
 	CloseHandle(hFileMap);
 }

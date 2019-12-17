@@ -43,8 +43,9 @@ int main() {
 	if (hMapFile == FALSE) {
 		printf("CreateFileMapping Failed with error %d\n", GetLastError());
 	}
-
-	printf("CreateFileMapping: Success.\n");
+	else {
+		printf("CreateFileMapping: Success.\n");
+	}
 
 	//Получаем указатель на участок файла с отображением
 	lpBuffer = (PCHAR)MapViewOfFile(
@@ -57,8 +58,9 @@ int main() {
 	if (lpBuffer == NULL) {
 		printf("MapViewOfFile failed with error %d\n", GetLastError());
 	}
-
-	printf("MapViewOfFile: Success.\n");
+	else {
+		printf("MapViewOfFile: Success.\n");
+	}
 
 	//Копируем наш буфер
 	CopyMemory(lpBuffer, buffer, szBuffer);
@@ -69,8 +71,9 @@ int main() {
 	if (bResult == FALSE) {
 		printf("UnmapViewOfFile failed with error %d.\n", GetLastError());
 	}
-
-	printf("UnmapViewOfFile: Success.\n");
+	else {
+		printf("UnmapViewOfFile: Success.\n");
+	}
 
 	system("PAUSE");
 	return 0;
